@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void bisection(double(*f)(double), double a, double b, int n){
+void bisection(double(*f)(double), double a, double b, int n, double tol){
     double fa = f(a);
     double fb = f(b);
     if(fa * fb >= 0){
@@ -16,6 +16,10 @@ void bisection(double(*f)(double), double a, double b, int n){
                 return;
             }
             printf("x_%d = %.16f\n", i + 1, m);
+            if(fabs(fm) < tol){
+                printf("atingiu a tolerancia => x_%d = %.16f\n", i + 1, m);
+                return;
+            }
             if(fa * fm < 0){
                 b = m;
             } else {
@@ -32,7 +36,8 @@ int main(){
     }
     double a = 1;
     double b = 2;
-    int n = 10;
+    int n = 100;
+    double tol = 0.0001;
 
-    bisection(f, a, b, n);
+    bisection(f, a, b, n, tol);
 }
